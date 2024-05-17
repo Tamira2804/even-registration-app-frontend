@@ -1,11 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./components/App/App";
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import App from './components/App/App'
+import './index.css'
+import axios from 'axios'
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
+axios.defaults.baseURL = 'http://localhost:3000'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter basename='/event-registration-app-frontend'>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
-);
+)
