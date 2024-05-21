@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import Container from 'components/Container'
-import { Wrapper, Title, Pagination, PageButton } from './EventsBoard.styled'
-import EventsList from 'components/EventsList'
 import axios from 'axios'
+import Container from 'components/Container'
+import EventsList from 'components/EventsList'
+
+import Pagination from 'components/Pagination'
+// import { Filters } from 'components/Filters'
+import SelectFilters from 'components/SelectFilters'
+// import { filterEvents } from 'helpers/filterEvents'
+
+import { Wrapper, Title } from './EventsBoard.styled'
 
 const EventsBoard = () => {
   const [events, setEvents] = useState([])
+  const [filteredEvents, setFilteredEvents] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [eventsPerPage] = useState(8)
 
@@ -15,6 +22,7 @@ const EventsBoard = () => {
       .then((res) => {
         console.log(res.data)
         setEvents(res.data)
+        setFilteredEvents(res.data)
       })
       .catch((err) => console.error(err))
   }, [])
@@ -24,41 +32,38 @@ const EventsBoard = () => {
       event._id === updatedEvent._id ? updatedEvent : event
     )
     setEvents(updatedEvents)
+    setFilteredEvents(updatedEvents)
   }
+
+  // const handleFilterChange = (filterValues) => {
+  //   const newFilteredEvents = filterEvents(events, filterValues)
+  //   setFilteredEvents(newFilteredEvents)
+  //   setCurrentPage(1)
+  // }
 
   const indexOfLastEvent = currentPage * eventsPerPage
   const indexOfFirstEvent = indexOfLastEvent - eventsPerPage
-  const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent)
-
-  const totalPages = Math.ceil(events.length / eventsPerPage)
-
-  const paginate = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber)
-    }
-  }
+  const currentEvents = filteredEvents.slice(
+    indexOfFirstEvent,
+    indexOfLastEvent
+  )
 
   return (
     <Container>
       <Wrapper>
         <Title>Event Board</Title>
+        {/* <Filters setFilterValue={handleFilterChange} /> */}
+        <SelectFilters events={events} setFilteredEvents={setFilteredEvents} />
         <EventsList
           eventsAll={currentEvents}
           onEventUpdate={handleEventUpdate}
         />
-        <Pagination>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-            (pageNumber) => (
-              <PageButton
-                key={pageNumber}
-                onClick={() => paginate(pageNumber)}
-                className={currentPage === pageNumber ? 'active' : ''}
-              >
-                {pageNumber}
-              </PageButton>
-            )
-          )}
-        </Pagination>
+        <Pagination
+          events={filteredEvents}
+          eventsPerPage={eventsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </Wrapper>
     </Container>
   )
