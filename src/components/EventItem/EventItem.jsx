@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { formatDate } from 'helpers/formatDate'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom' // page version
 import Modal from '../Modal'
 import EventRegistration from 'pages/EventRegistration'
 import EventParticipants from 'pages/EventParticipants'
@@ -10,12 +10,12 @@ import {
   Title,
   Descr,
   BtnWrapper,
-  StyledLink,
+  // StyledLink,  // page version
   Btn,
 } from './EventItem.styled'
 
 const EventItem = ({ event }) => {
-  // const navigate = useNavigate()
+  // const navigate = useNavigate() // page version
   const formattedDate = formatDate(event.date)
 
   const [isOpenRegistrationModal, setIsOpenRegistrationModal] = useState(false)
@@ -34,7 +34,7 @@ const EventItem = ({ event }) => {
     setIsOpenParticipantsModal(false)
   }
 
-  // const handleViewParticipants = async () => {
+  // const handleViewParticipants = async () => {  // page version
   //   navigate(`/${event._id}/participants`)
   // }
 
@@ -48,7 +48,7 @@ const EventItem = ({ event }) => {
         <BtnWrapper>
           <Btn onClick={handleOpenRegistrationModal}>Registration</Btn>
           <Btn onClick={handleOpenParticipantsModal}>View</Btn>
-          {/* <StyledLink to={`/${event._id}/register`}>Registration</StyledLink>
+          {/* <StyledLink to={`/${event._id}/register`}>Registration</StyledLink>  // page version
           <Btn onClick={handleViewParticipants}>View</Btn> */}
         </BtnWrapper>
       </CardThumb>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { filterEvents } from 'helpers/filterEvents'
+import { formatDate } from 'helpers/formatDate'
 import { FiltersWrapper, FilterItem } from './SelectFilters.styled'
 
-const Filters = ({ events, setFilteredEvents }) => {
+const SelectFilters = ({ events, setFilteredEvents }) => {
   const [filterValues, setFilterValues] = useState({
     title: '',
     date: '',
@@ -20,6 +21,15 @@ const Filters = ({ events, setFilteredEvents }) => {
 
   const renderSelectOptions = (fieldName) => {
     const uniqueValues = [...new Set(events.map((event) => event[fieldName]))]
+    uniqueValues.sort((a, b) => {
+      if (fieldName === 'date') {
+        return new Date(a) - new Date(b)
+      }
+      if (a < b) return -1
+      if (a > b) return 1
+      return 0
+    })
+
     return (
       <select
         value={filterValues[fieldName]}
@@ -28,7 +38,7 @@ const Filters = ({ events, setFilteredEvents }) => {
         <option value=''>All</option>
         {uniqueValues.map((value, index) => (
           <option key={index} value={value}>
-            {value}
+            {fieldName === 'date' ? formatDate(value) : value}
           </option>
         ))}
       </select>
@@ -53,4 +63,4 @@ const Filters = ({ events, setFilteredEvents }) => {
   )
 }
 
-export default Filters
+export default SelectFilters
