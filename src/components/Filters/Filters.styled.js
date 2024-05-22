@@ -21,10 +21,11 @@ export const FilterItem = styled.div`
 
   input,
   select {
-    padding: 5px;
+    padding: var(--fs-md);
+    font-size: var(--fs-md);
     border-radius: var(--radius-sm);
     border: 1px solid var(--accent);
-    font-size: var(--fs-md);
+    margin-bottom: var(--fs-md);
     &:focus {
       border-color: var(--accent-hover);
       outline: none;

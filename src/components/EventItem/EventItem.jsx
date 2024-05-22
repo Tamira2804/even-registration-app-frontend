@@ -55,7 +55,7 @@ const EventItem = ({ event }) => {
       </CardThumb>
       {isOpenRegistrationModal && (
         <Modal onClose={handleCloseModal} isOpenModal={isOpenRegistrationModal}>
-          <EventRegistration eventId={event._id} />
+          <EventRegistration eventId={event._id} onClose={handleCloseModal} />
         </Modal>
       )}
       {isOpenParticipantsModal && (

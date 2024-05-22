@@ -4,7 +4,7 @@ import { fetchEvent } from 'helpers/api'
 
 import { Wrapper, Title } from './EventRegistration.styled'
 
-const EventRegistration = ({ eventId }) => {
+const EventRegistration = ({ eventId, onClose }) => {
   const [event, setEvent] = useState(null)
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const EventRegistration = ({ eventId }) => {
         <>
           <Title>{event.title} registration</Title>
 
-          <RegistrationForm eventId={eventId} />
+          <RegistrationForm eventId={eventId} onClose={onClose} />
         </>
       ) : (
         <p>Loading...</p>
