@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { formatDate } from 'helpers/formatDate'
 // import { useNavigate } from 'react-router-dom' // page version
 import Modal from '../Modal'
+
 import EventRegistration from 'pages/EventRegistration'
 import EventParticipants from 'pages/EventParticipants'
 

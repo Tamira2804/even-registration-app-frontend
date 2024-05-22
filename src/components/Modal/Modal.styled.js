@@ -21,7 +21,7 @@ export const ModalWindow = styled.div`
   border-radius: var(--radius-lg);
   background-color: var(--white);
 
-  width: 541px;
+  width: 740px;
   padding: 40px;
 
   .modal {
