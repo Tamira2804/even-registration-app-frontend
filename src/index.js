@@ -8,9 +8,9 @@ import axios from 'axios'
 axios.defaults.baseURL = 'http://localhost:3000'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <BrowserRouter basename='/event-registration-app-frontend'>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+  //  <React.StrictMode>
+  <BrowserRouter basename='/event-registration-app-frontend'>
+    <App />
+  </BrowserRouter>
+  // </React.StrictMode>
 )

@@ -12,6 +12,7 @@ const SelectFilters = ({ events, setFilteredEvents }) => {
 
   useEffect(() => {
     const filtered = filterEvents(events, filterValues)
+    console.log('useEffect filtered:', filtered)
     setFilteredEvents(filtered)
   }, [filterValues, events, setFilteredEvents])
 
