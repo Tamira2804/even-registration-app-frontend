@@ -3,12 +3,14 @@ import axios from 'axios'
 import Container from 'components/Container'
 import EventsList from 'components/EventsList'
 import SelectFilters from 'components/SelectFilters'
+import { fetchAllEvents } from 'helpers/api'
 
 import { Wrapper, Title } from './EventsBoard.styled'
 
 const EventsBoard = () => {
   const [events, setEvents] = useState([])
   const [filteredEvents, setFilteredEvents] = useState([])
+  const [allEvents, setAllEvents] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [fetching, setFetching] = useState(true)
   const [totalPages, setTotalPages] = useState(0)
@@ -31,7 +33,7 @@ const EventsBoard = () => {
         .catch((err) => console.error(err))
         .finally(() => setFetching(false))
     }
-  }, [fetching, currentPage, totalPages, events])
+  }, [fetching, currentPage])
 
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler)
@@ -44,13 +46,26 @@ const EventsBoard = () => {
     if (events.length === 0) {
       setFetching(true)
     }
+  }, [events.length])
+
+  useEffect(() => {
+    const getAllEvents = async () => {
+      try {
+        const allFetchedEvents = await fetchAllEvents()
+        setAllEvents(allFetchedEvents)
+      } catch (error) {
+        console.error('Error fetching all events:', error)
+      }
+    }
+    getAllEvents()
   }, [])
 
   const scrollHandler = (e) => {
     if (
       e.target.documentElement.scrollHeight -
         (e.target.documentElement.scrollTop + window.innerHeight) <
-      100
+        100 &&
+      currentPage <= totalPages
     ) {
       setFetching(true)
     }
@@ -60,7 +75,10 @@ const EventsBoard = () => {
     <Container>
       <Wrapper>
         <Title>Event Board</Title>
-        <SelectFilters events={events} setFilteredEvents={setFilteredEvents} />
+        <SelectFilters
+          events={allEvents}
+          setFilteredEvents={setFilteredEvents}
+        />
         <EventsList eventsAll={filteredEvents} />
       </Wrapper>
     </Container>
